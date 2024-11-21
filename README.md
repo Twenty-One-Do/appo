@@ -1,6 +1,6 @@
 ## APPO API
 
-### Install dependencies
+### Install Poetry
 
 - Linux/macOS:
 ```
