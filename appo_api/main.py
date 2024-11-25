@@ -12,7 +12,7 @@ def create_app() -> FastAPI:
     )
 
     module.add_routers(app, settings.INCLUDE_APPS)
-    
+
     # add middleware
     app.add_middleware(
         CORSMiddleware,

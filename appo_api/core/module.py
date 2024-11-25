@@ -31,7 +31,9 @@ def add_routers(app: FastAPI, package_names: list[str]) -> None:
         app.include_router(router)
 
 
-def import_modules(package: str, namespace: str, domains: list[str] | None = None) -> list[ModuleType]:
+def import_modules(
+    package: str, namespace: str, domains: list[str] | None = None
+) -> list[ModuleType]:
     # 지정한 패키지 디렉터리 경로로 변환
     packages = package.split(".")
     package_path = os.path.join(settings.BASE_DIR, *packages)
