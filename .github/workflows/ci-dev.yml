@@ -2,7 +2,7 @@ name: Dev Deployment
 
 on:
   push:
-    branches: [ "dev" ]
+    branches: ["dev"]
 
 env:
   AWS_REGION: ap-northeast-2
