@@ -2,9 +2,9 @@ name: CI for all branches
 
 on:
   pull_request:
-    branches: ["main", "dev", "prod"]
+    branches: ["**"]
   push:
-    branches: ["main", "dev", "prod"]
+    branches: ["**"]
 
 env:
   AWS_REGION: ap-northeast-2
