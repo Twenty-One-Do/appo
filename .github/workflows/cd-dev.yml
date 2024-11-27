@@ -1,16 +1,14 @@
-name: Main CI
+name: Dev Deployment
 
 on:
   push:
-    branches: ["main"]
-  pull_request:
-    branches: ["main"]
+    branches: ["dev"]
 
 env:
   AWS_REGION: ap-northeast-2
   ECR_REPOSITORY: APPO_API
   APP_NAME: APPO
-
+# 테스트 서버 확보 후 배포 Workflow로 변경 요망
 jobs:
   linter:
     runs-on: ubuntu-latest
