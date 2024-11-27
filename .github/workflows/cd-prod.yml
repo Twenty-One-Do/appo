@@ -39,7 +39,7 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     needs: linter
-    
+
     steps:
       # 1. 리포지토리 코드 체크아웃
       - name: Checkout code
