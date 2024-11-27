@@ -3,8 +3,6 @@ name: CI for all branches
 on:
   pull_request:
     branches: ["**"]
-  push:
-    branches-ignore: ["dev", "prod"]
 
 env:
   AWS_REGION: ap-northeast-2
