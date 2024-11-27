@@ -1,3 +1,5 @@
+from typing import Generator
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, sessionmaker
 from appo_api.config import settings
