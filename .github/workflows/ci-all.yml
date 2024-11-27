@@ -4,7 +4,7 @@ on:
   pull_request:
     branches: ["**"]
   push:
-    branches: ["**"]
+    branches-ignore: ["dev", "prod"]
 
 env:
   AWS_REGION: ap-northeast-2
