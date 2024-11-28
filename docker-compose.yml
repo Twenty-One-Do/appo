@@ -1,5 +1,4 @@
 services:
-
   api:
     build: .
     container_name: api
