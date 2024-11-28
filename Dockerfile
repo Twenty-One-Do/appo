@@ -15,4 +15,4 @@ RUN pip install "poetry==$POETRY_VERSION"
 
 RUN poetry install --without dev
 
-CMD ["gunicorn", "-c", "gunicorn.conf.py", "appo_api.main:create_app"]
+CMD ["poetry", "run", "gunicorn", "-c", "gunicorn.conf.py", "appo_api.main:create_app"]
