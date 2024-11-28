@@ -16,6 +16,7 @@ ruff = "^0.8.0"
 pre-commit = "^4.0.1"
 sqlalchemy = "^2.0.36"
 pydantic = "^2.10.2"
+alembic = "^1.14.0"
 
 
 [build-system]

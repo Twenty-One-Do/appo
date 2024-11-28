@@ -66,7 +66,6 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             cd /home/ubuntu/appo-backend
-            docker compose down --remove-orphans || true
             docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.APP_NAME }}:latest
-            docker compose up -d --force-recreate
+            docker compose restart api
             docker image prune -f
