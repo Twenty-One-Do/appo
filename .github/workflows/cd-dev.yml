@@ -10,6 +10,7 @@ env:
   APP_NAME: appo
 
 jobs:
+
   linter:
     runs-on: ubuntu-latest
 
@@ -67,5 +68,5 @@ jobs:
             cd /home/ubuntu/appo-backend
             docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.APP_NAME }}-dev:latest
             docker compose stop api-dev
-            docker compose up api-dev
+            docker compose up api-dev -d
             docker image prune -f
