@@ -9,23 +9,10 @@ ENV PYTHONUNBUFFERED=1 \
 
 WORKDIR /app
 
+COPY . /app
+
 RUN pip install "poetry==$POETRY_VERSION"
 
-COPY pyproject.toml poetry.lock ./
-
-RUN poetry export -f requirements.txt --output requirements.txt --without-hashes
-
-# Runtime stage
-FROM python:3.11-slim-buster
-
-ENV PYTHONUNBUFFERED=1 \
-    PYTHONDONTWRITEBYTECODE=1
-
-WORKDIR /app
-
-COPY --from=builder /app/requirements.txt .
-RUN pip install --no-cache-dir --upgrade -r requirements.txt
-
-COPY . /app
+RUN poetry install --without dev
 
 CMD ["gunicorn", "-c", "gunicorn.conf.py", "appo_api.main:create_app"]

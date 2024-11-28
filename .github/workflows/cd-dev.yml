@@ -30,7 +30,7 @@ jobs:
       - name: Install dependencies
         if: steps.cache-poetry.outputs.cache-hit != 'true'
         run: |
-          poetry install
+          poetry install --without dev
 
       - name: Run linters
         run: |
