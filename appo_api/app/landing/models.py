@@ -1,7 +1,13 @@
-import uuid
-from sqlalchemy import Integer, String, Boolean, Uuid
+from sqlalchemy import Uuid, Integer, String, Enum, Boolean
+from sqlalchemy.orm import (
+    DeclarativeBase,
+    registry,
+    Mapped,
+    mapped_column,
+)
 from datetime import datetime, timezone
-from sqlalchemy.orm import DeclarativeBase, registry, mapped_column, Mapped
+import enum
+import uuid
 
 
 class Base(DeclarativeBase):
@@ -37,3 +43,25 @@ class Apartment(Base, DateMixin):
     # counsels: Mapped[list["Counsel"]] = relationship(
     #     "Counsel", back_populates="apartment"
     # )
+
+
+class Gender(enum.Enum):
+    male = "male"
+    female = "female"
+
+
+class CounselApplication(Base, DateMixin):
+    __tablename__ = "counsels"
+
+    id: Mapped[int] = mapped_column(
+        Integer, primary_key=True, index=True, nullable=False
+    )
+    name: Mapped[str] = mapped_column(String(40), nullable=False)
+    phone_number: Mapped[str] = mapped_column(String(20), nullable=False)
+    gender: Mapped[Gender] = mapped_column(Enum(Gender), nullable=True)
+    memo: Mapped[str] = mapped_column(String(500), nullable=True)
+    # apartment_id: Mapped[int] = mapped_column(
+    #     Integer, ForeignKey("apartments.id"), index=True, nullable=False
+    # )
+
+    # apartment = relationship("Apartment", back_populates="counsel_applications")
