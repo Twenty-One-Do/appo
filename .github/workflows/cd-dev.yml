@@ -7,7 +7,7 @@ on:
 env:
   AWS_REGION: ap-northeast-2
   ECR_REPOSITORY: APPO_API
-  APP_NAME: APPO
+  APP_NAME: appo
 
 jobs:
 
