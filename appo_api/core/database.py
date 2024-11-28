@@ -2,11 +2,12 @@ from typing import Generator
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, sessionmaker
+
 from appo_api.config import settings
 
 DATABASE_URL = (
     settings.DATABASE_URL
-    if settings.ENVIRONMENT == "PROD"
+    if settings.ENVIRONMENT == 'PROD'
     else settings.DEV_DATABASE_URL
 )
 

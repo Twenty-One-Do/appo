@@ -1,3 +1,4 @@
 .env
 .github
+/alembic/
 docker-compose.yml
