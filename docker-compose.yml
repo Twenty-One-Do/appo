@@ -1,17 +1,4 @@
 services:
-  db:
-    image: mysql:8.0
-    container_name: db
-    env_file:
-      - .env
-    environment:
-      MYSQL_DATABASE: PROD
-    volumes:
-      - mysql_data:/var/lib/mysql
-    ports:
-      - "3306:3306"
-    restart: always
-
   api:
     build: .
     container_name: api

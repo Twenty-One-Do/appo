@@ -2,8 +2,8 @@ from datetime import datetime, timezone
 
 from zoneinfo import ZoneInfo
 
-KST = ZoneInfo("Asia/Seoul")
-UTC = ZoneInfo("UTC")
+KST = ZoneInfo('Asia/Seoul')
+UTC = ZoneInfo('UTC')
 
 
 def to_utc_isoformat(dt: datetime) -> str:

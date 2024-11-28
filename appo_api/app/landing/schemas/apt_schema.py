@@ -1,5 +1,6 @@
-from ...common.schemas import AppoBaseModel
 from typing import Optional
+
+from ...common.schemas import AppoBaseModel
 
 
 class AptInfoRequest(AppoBaseModel):
