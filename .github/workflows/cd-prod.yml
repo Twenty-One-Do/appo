@@ -66,5 +66,6 @@ jobs:
           script: |
             cd /home/ubuntu/appo-backend
             docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.APP_NAME }}:latest
-            docker compose restart api
+            docker compose stop api
+            docker compose up api -d
             docker image prune -f
