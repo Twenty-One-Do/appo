@@ -1,9 +1,21 @@
 from ...common.schemas import AppoBaseModel
+from typing import Optional
 
 
 class AptInfoRequest(AppoBaseModel):
-    pass
+    name: str
+    main_number: str
+    location: str
+    company_id: int
+    introduction: Optional[str] = None
+    is_active: Optional[bool] = True
 
 
 class AptInfoResponse(AppoBaseModel):
-    pass
+    id: int
+    name: str
+    main_number: str
+    location: str
+    company_id: int
+    introduction: Optional[str] = None
+    is_active: bool
