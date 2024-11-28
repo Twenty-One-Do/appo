@@ -6,10 +6,7 @@ from appo_api.core import module
 
 
 def create_app() -> FastAPI:
-    app = FastAPI(
-        title="APPO API",
-        description="APPO API",
-    )
+    app = FastAPI(title='APPO API', description='APPO API')
 
     module.add_routers(app, settings.INCLUDE_APPS)
 
@@ -19,7 +16,7 @@ def create_app() -> FastAPI:
         allow_origins=settings.CORS_ORIGINS,
         allow_origin_regex=settings.CORS_ORIGINS_REGEX,
         allow_credentials=True,
-        allow_methods=("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"),
+        allow_methods=('GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'),
         allow_headers=settings.CORS_HEADERS,
     )
 

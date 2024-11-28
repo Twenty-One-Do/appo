@@ -8,6 +8,6 @@ def max_workers() -> int:
         return cpu_count() + 1
 
 
-bind = "0.0.0.0:8000"
+bind = '0.0.0.0:8000'
 workers = 1
-worker_class = "uvicorn.workers.UvicornWorker"
+worker_class = 'uvicorn.workers.UvicornWorker'

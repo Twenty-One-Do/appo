@@ -11,16 +11,16 @@ log = logging.getLogger(__name__)
 
 
 def import_db_models() -> None:
-    import_modules("app", "models")
+    import_modules('app', 'models')
 
 
 def add_routers(app: FastAPI, package_names: list[str]) -> None:
     modules = []
     for package_name in package_names:
-        modules.extend(import_modules(package_name, "router"))
+        modules.extend(import_modules(package_name, 'router'))
 
     for module in modules:
-        if "router" not in dir(module):
+        if 'router' not in dir(module):
             continue
 
         router = module.router
@@ -35,7 +35,7 @@ def import_modules(
     package: str, namespace: str, domains: list[str] | None = None
 ) -> list[ModuleType]:
     # 지정한 패키지 디렉터리 경로로 변환
-    packages = package.split(".")
+    packages = package.split('.')
     package_path = os.path.join(settings.BASE_DIR, *packages)
 
     module_names = []
@@ -50,7 +50,7 @@ def import_modules(
         # 모듈이 존재하는 경우 해당 모듈 추가
         for filename in files:
             file_path = os.path.join(rootdir, filename)
-            if filename == f"{namespace}.py":
+            if filename == f'{namespace}.py':
                 module_names.append(_path_to_modulename(settings.ROOT_DIR, file_path))
 
     modules = []
@@ -62,8 +62,8 @@ def import_modules(
 
 def _path_to_modulename(base_path: str, module_path: str) -> str:
     rel_path = os.path.relpath(module_path, base_path)
-    if rel_path.endswith(".py"):
+    if rel_path.endswith('.py'):
         rel_path = rel_path[:-3]
 
-    module_name = rel_path.replace(os.path.sep, ".")
+    module_name = rel_path.replace(os.path.sep, '.')
     return module_name
