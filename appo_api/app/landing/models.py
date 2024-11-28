@@ -1,10 +1,9 @@
-from sqlalchemy import Uuid, Integer, String, DateTime, ForeignKey, Enum
+from sqlalchemy import Uuid, Integer, String, Enum, Boolean
 from sqlalchemy.orm import (
     DeclarativeBase,
     registry,
     Mapped,
     mapped_column,
-    relationship,
 )
 from datetime import datetime, timezone
 import enum
@@ -21,14 +20,29 @@ class Base(DeclarativeBase):
 
 
 class DateMixin:
-    created_at: Mapped[datetime] = mapped_column(
-        DateTime, default=lambda: datetime.now(timezone.utc)
+    created_at = Mapped[datetime] = mapped_column(
+        default=lambda: datetime.now(timezone.utc)
     )
     updated_at: Mapped[datetime] = mapped_column(
-        DateTime,
         default=lambda: datetime.now(timezone.utc),
         onupdate=lambda: datetime.now(timezone.utc),
     )
+
+
+class Apartment(Base, DateMixin):
+    __tablename__ = "apartments"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    name: Mapped[str] = mapped_column(String(40), nullable=False)
+    main_number: Mapped[str] = mapped_column(String(13), nullable=False)
+    location: Mapped[str] = mapped_column(String(200), nullable=False)
+    company: Mapped[str] = mapped_column(String(40), nullable=False)
+    introduction: Mapped[str] = mapped_column(String(500), nullable=True)
+    is_active: Mapped[bool] = mapped_column(Boolean, default=True)
+
+    # counsels: Mapped[list["Counsel"]] = relationship(
+    #     "Counsel", back_populates="apartment"
+    # )
 
 
 class Gender(enum.Enum):
@@ -46,8 +60,8 @@ class CounselApplication(Base, DateMixin):
     phone_number: Mapped[str] = mapped_column(String(20), nullable=False)
     gender: Mapped[Gender] = mapped_column(Enum(Gender), nullable=True)
     memo: Mapped[str] = mapped_column(String(500), nullable=True)
-    apartment_id: Mapped[int] = mapped_column(
-        Integer, ForeignKey("apartments.id"), index=True, nullable=False
-    )
+    # apartment_id: Mapped[int] = mapped_column(
+    #     Integer, ForeignKey("apartments.id"), index=True, nullable=False
+    # )
 
-    apartment = relationship("Apartment", back_populates="counsel_applications")
+    # apartment = relationship("Apartment", back_populates="counsel_applications")
