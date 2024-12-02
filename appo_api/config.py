@@ -18,7 +18,10 @@ class Settings(BaseSettings):
     DATABASE_URL: str | None = os.getenv('DATABASE_URL')
     DEV_DATABASE_URL: str | None = os.getenv('DEV_DATABASE_URL')
 
-    CORS_ORIGINS: list[str]
+    CORS_ORIGINS: list[str] = [
+        'http://localhost:3000',
+        'http://localhost:3000/leciel/reservation',
+    ]
     CORS_ORIGINS_REGEX: str | None = None
     CORS_HEADERS: list[str]
 
