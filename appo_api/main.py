@@ -6,7 +6,10 @@ from appo_api.core import module
 
 
 def create_app() -> FastAPI:
-    app = FastAPI(title='APPO API', description='APPO API', openapi_prefix='/api')
+    if settings.ENVIRONMENT == 'PROD':
+        app = FastAPI(title='APPO API', description='APPO API', openapi_prefix='/api')
+    else:
+        app = FastAPI(title='APPO DEV', description='APPO DEV', openapi_prefix='/dev')
 
     module.add_routers(app, settings.INCLUDE_APPS)
 
