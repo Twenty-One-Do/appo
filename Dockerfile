@@ -9,7 +9,7 @@ ENV PYTHONUNBUFFERED=1 \
 
 WORKDIR /app
 
-RUN apt update && apt install pkg-config python3-dev libmysqlclient-dev build-essential -y
+RUN apt update && apt install pkg-config python3-dev default-libmysqlclient-dev build-essential -y
 
 RUN pip install "poetry==$POETRY_VERSION"
 
