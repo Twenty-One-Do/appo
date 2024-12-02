@@ -15,7 +15,7 @@ RUN pip install "poetry==$POETRY_VERSION"
 
 COPY pyproject.toml poetry.lock /app/
 
-RUN poetry install --without dev
+RUN poetry install
 
 COPY . /app
 
