@@ -1,6 +1,8 @@
 ### Custom ###
 
 /alembic/
+docker-compose.yml
+nginx.conf
 
 # Created by https://www.toptal.com/developers/gitignore/api/python,git,windows,macos,linux
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,git,windows,macos,linux

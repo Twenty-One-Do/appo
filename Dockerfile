@@ -9,10 +9,14 @@ ENV PYTHONUNBUFFERED=1 \
 
 WORKDIR /app
 
-COPY . /app
+RUN apt update && apt install pkg-config python3-dev default-libmysqlclient-dev build-essential -y
 
 RUN pip install "poetry==$POETRY_VERSION"
 
+COPY pyproject.toml poetry.lock /app/
+
 RUN poetry install --without dev
+
+COPY . /app
 
 CMD ["poetry", "run", "gunicorn", "-c", "gunicorn.conf.py", "appo_api.main:create_app"]
