@@ -6,6 +6,6 @@ from ..schemas import counsel_schema as schema
 
 def create_counsel_application(
     request: schema.CounselApplicationRequest, db: Session
-) -> None:
-    crud.create_counsel_application(db)
-    return None
+) -> schema.CounselApplicationResponse:
+    counsel_application = crud.create_counsel_application(request, db)
+    return schema.CounselApplicationResponse.from_orm(counsel_application)

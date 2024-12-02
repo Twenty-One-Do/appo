@@ -17,7 +17,7 @@ def import_db_models() -> None:
 def add_routers(app: FastAPI, package_names: list[str]) -> None:
     modules = []
     for package_name in package_names:
-        modules.extend(import_modules(package_name, 'router'))
+        modules.extend(import_modules(package_name, 'routers'))
 
     for module in modules:
         if 'router' not in dir(module):

@@ -6,7 +6,7 @@ from appo_api.core.database import get_db
 from ..schemas import apt_schema as schema
 from ..services import apt_service as service
 
-router = APIRouter(prefix='landing', tags=['landing'])
+router = APIRouter(prefix='/landing', tags=['landing'])
 
 
 @router.get(
