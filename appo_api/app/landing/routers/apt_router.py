@@ -10,10 +10,24 @@ router = APIRouter(prefix='/landing', tags=['landing'])
 
 
 @router.get(
-    '/apt/info', summary='아파트 랜딩페이지 정보', response_model=schema.AptInfoResponse
+    '/apt/info',
+    summary='아파트 랜딩페이지 정보',
+    response_model=list[schema.AptInfoResponse],
 )
 def get_apt_info(
-    request: schema.AptInfoRequest = Depends(schema.AptInfoRequest),
+    request: schema.AptInfoRequest,
     db: Session = Depends(get_db),
 ):
     return service.get_apt_info(request, db=db)
+
+
+@router.post(
+    '/apt/info',
+    summary='아파트 랜딩페이지 정보 생성',
+    response_model=schema.AptInfoResponse,
+)
+def create_apt_info(
+    request: schema.CreateAptInfoRequest,
+    db: Session = Depends(get_db),
+):
+    return service.create_apt_info(request, db=db)

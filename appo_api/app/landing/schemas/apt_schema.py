@@ -5,11 +5,19 @@ from ...models import ApartmentInfos
 
 
 class AptInfoRequest(AppoBaseModel):
-    apt_info_id: int
+    apt_info_id: int | None = None
     name: str | None = None
     main_number: str | None = None
     location: str | None = None
     company: str | None = None
+
+
+class CreateAptInfoRequest(AppoBaseModel):
+    name: str
+    main_number: str
+    location: str | None = None
+    company: str | None = None
+    introduction: str | None = None
 
 
 class AptInfoResponse(AppoBaseModel):

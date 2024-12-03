@@ -6,13 +6,19 @@ from ..schemas import apt_schema as schema
 
 def get_apt_info(
     request: schema.AptInfoRequest, db: Session
+) -> list[schema.AptInfoResponse]:
+    apt_infos = crud.get_apt_info(
+        request,
+        db,
+    )
+    return [schema.AptInfoResponse.from_orm(apt_info) for apt_info in apt_infos]
+
+
+def create_apt_info(
+    request: schema.CreateAptInfoRequest, db: Session
 ) -> schema.AptInfoResponse | bool:
-    apt_info = crud.get_apt_info(
-        apt_info_id=request.apt_info_id,
-        name=request.name,
-        main_number=request.main_number,
-        location=request.location,
-        company=request.company,
+    apt_info = crud.create_apt_info(
+        request=request,
         db=db,
     )
     if apt_info:

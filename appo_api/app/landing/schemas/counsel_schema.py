@@ -6,6 +6,14 @@ from ...models import CounselApplications
 
 
 class CounselApplicationRequest(AppoBaseModel):
+    name: str | None = None
+    phone_number: str | None = None
+    gender: Gender | None = None
+    memo: str | None = None
+    apartment_id: int
+
+
+class CreateCounselApplicationRequest(AppoBaseModel):
     name: str
     phone_number: str
     gender: Gender | None = None
