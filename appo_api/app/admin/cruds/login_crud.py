@@ -18,7 +18,7 @@ def register(request: schema.CreateManagerRequest, db: Session) -> Managers:
     new_manager = Managers(
         name=request.name, phone_number=request.phone_number, username=request.username
     )
-    new_manager.password(request.password)
+    new_manager.set_password(request.password)
 
     db.add(new_manager)
     db.commit()

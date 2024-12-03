@@ -83,8 +83,7 @@ class Managers(Base, Basic):
     username: Mapped[str] = mapped_column(String(40), nullable=False, unique=True)
     password: Mapped[str] = mapped_column(String(40), nullable=False)
 
-    @password.setter  # type: ignore[no-redef]
-    def password(self, password: str) -> None:
+    def set_password(self, password: str) -> None:
         self.password = get_password_hash(password)
 
     def verify_password(self, plain_password: str) -> bool:
