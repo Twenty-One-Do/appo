@@ -11,8 +11,9 @@ DATABASE_URL = (
     else settings.DEV_DATABASE_URL
 )
 
-engine = create_engine(DATABASE_URL+"?charset=utf8")
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+if DATABASE_URL:
+    engine = create_engine(DATABASE_URL + '?charset=utf8')
+    SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 
 def get_db() -> Generator[Session, None, None]:
