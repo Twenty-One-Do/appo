@@ -1,6 +1,5 @@
 import os
 
-from typing import ClassVar
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 from .exceptions import SettingException
@@ -32,7 +31,7 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 15 * 4  # 60 minutes
     REFRESH_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 3  # 1 day
 
-    secret_key: ClassVar[str] = os.getenv('SECRET_KEY')
+    secret_key: str | None = os.getenv('SECRET_KEY')
 
     if secret_key:
         SECRET_KEY: str = secret_key
