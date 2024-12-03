@@ -8,9 +8,10 @@ from sqlalchemy.orm import (
     mapped_column,
     registry,
 )
-from werkzeug.security import check_password_hash, generate_password_hash
 
 from appo_api.app.common.constants import Gender
+
+from ..core.security import get_password_hash, verify_password
 
 
 class Base(DeclarativeBase):
@@ -77,14 +78,14 @@ class Managers(Base, Basic):
     __tablename__ = 'managers'
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
-    name: Mapped[str] = mapped_column(String(40), nullable=False)
-    phone_number: Mapped[str] = mapped_column(String(13), nullable=False)
-    username: Mapped[str] = mapped_column(String(40), nullable=False)
+    name: Mapped[str] = mapped_column(String(40), nullable=False, unique=True)
+    phone_number: Mapped[str] = mapped_column(String(13), nullable=False, unique=True)
+    username: Mapped[str] = mapped_column(String(40), nullable=False, unique=True)
     password: Mapped[str] = mapped_column(String(40), nullable=False)
 
-    def set_password(self, password: str) -> None:
-        self.password = generate_password_hash(password)
+    @password.setter  # type: ignore[no-redef]
+    def password(self, password: str) -> None:
+        self.password = get_password_hash(password)
 
-    def check_password(self, password: str) -> bool:
-        result: bool = check_password_hash(self.hashed_password, password)
-        return result
+    def verify_password(self, plain_password: str) -> bool:
+        return verify_password(plain_password, self.password)

@@ -2,6 +2,8 @@ import os
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+from .exceptions import SettingException
+
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
@@ -24,6 +26,19 @@ class Settings(BaseSettings):
     ]
     CORS_ORIGINS_REGEX: str | None = None
     CORS_HEADERS: list[str]
+
+    # JWT
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 15 * 4  # 60 minutes
+    REFRESH_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 3  # 1 day
+
+    secret_key = os.getenv('SECRET_KEY')
+
+    if secret_key:
+        SECRET_KEY: str = secret_key
+    else:
+        raise SettingException
+
+    ALGORITHM: str = 'HS256'
 
 
 settings = Settings()

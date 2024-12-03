@@ -1,5 +1,7 @@
 from typing import Self
 
+from pydantic import validator
+
 from ...common.constants import Gender
 from ...common.schemas import AppoBaseModel
 from ...models import CounselApplications
@@ -19,6 +21,23 @@ class CreateCounselApplicationRequest(AppoBaseModel):
     gender: Gender | None = None
     memo: str | None = None
     apartment_id: int
+
+    @validator('name')
+    def validate_name(cls, v):
+        if len(v) < 1:
+            raise ValueError('name must be at least 1 characters long')
+        return v
+
+    @validator('phone_number')
+    def validate_phone_number(cls, v):
+        if len(v) < 6:
+            raise ValueError('phone_number must be at least 6 characters long')
+        if '-' in v:
+            raise ValueError('phone_number should not contain hyphens')
+        if not v.isdigit():
+            raise ValueError('phone_number must contain only digits')
+
+        return v
 
 
 class CounselApplicationResponse(AppoBaseModel):
