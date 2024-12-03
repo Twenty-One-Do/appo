@@ -1,10 +1,13 @@
 class AppoException(Exception):
     """Base exception for the Appo API."""
 
+
 class SettingException(AppoException):
     """Exception for server setting errors (5xx)."""
+
     status_code: int = 500
     message: str = 'Server Setting Error'
+
 
 class DetailedHTTPException(AppoException):
     """Exception that includes a status code and a message."""

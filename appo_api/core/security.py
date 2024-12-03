@@ -19,6 +19,7 @@ def get_password_hash(password: str) -> str:
     hashed_password: str = pwd_context.hash(password)
     return hashed_password
 
+
 def create_jwt(data: dict, expires: int | None) -> bytes:
     to_encode = data.copy()
     if expires is not None:

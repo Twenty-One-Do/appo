@@ -38,14 +38,14 @@ def refresh(refresh_token: str, db: Session) -> schema.TokenResponse:
     if not manager.is_active:
         raise UnAuthorizedException(detail='inactive manager')
 
-    access_token = create_jwt(
+    new_access_token = create_jwt(
         {
             'username': manager.username,
             'token_type': TokenType.ACCESS,
         },
         expires=settings.ACCESS_TOKEN_EXPIRE_MINUTES,
     )
-    refresh_token = create_jwt(
+    new_refresh_token = create_jwt(
         {
             'username': manager.username,
             'token_type': TokenType.REFRESH,
@@ -53,7 +53,9 @@ def refresh(refresh_token: str, db: Session) -> schema.TokenResponse:
         expires=settings.REFRESH_TOKEN_EXPIRE_MINUTES,
     )
 
-    return schema.TokenResponse(access_token=access_token, refresh_token=refresh_token)
+    return schema.TokenResponse(
+        access_token=new_access_token, refresh_token=new_refresh_token
+    )
 
 
 def _parse_token(token: str) -> schema.TokenData:

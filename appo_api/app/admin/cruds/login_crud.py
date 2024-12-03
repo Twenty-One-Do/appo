@@ -6,7 +6,7 @@ from ...models import Managers
 from ..schemas import login_schemas as schema
 
 
-def get_user_by_login_id(username: str, db: Session) -> Managers:
+def get_user_by_login_id(username: str, db: Session):
     manager = db.query(Managers).filter(Managers.username == username).first()
     if not manager:
         raise UserNotFound(detail={'username': username})
