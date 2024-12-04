@@ -1,8 +1,13 @@
 import os
+from typing import Tuple
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-from .exceptions import SettingException
+from .exceptions import (
+    ClientException,
+    SettingException,
+    client_exception_handler,
+)
 
 
 class Settings(BaseSettings):
@@ -15,11 +20,37 @@ class Settings(BaseSettings):
 
     INCLUDE_APPS: list[str] = ['app']
 
-    ENVIRONMENT: str | None = os.getenv('ENVIRONMENT')
+    secret_key: str | None = os.getenv('SECRET_KEY')
+    environment: str | None = os.getenv('ENVIRONMENT')
+    database_url: str | None = os.getenv('DATABASE_URL')
+    dev_database_url: str | None = os.getenv('DEV_DATABASE_URL')
 
-    DATABASE_URL: str | None = os.getenv('DATABASE_URL')
-    DEV_DATABASE_URL: str | None = os.getenv('DEV_DATABASE_URL')
+    if secret_key:
+        SECRET_KEY: str = secret_key
+    else:
+        raise SettingException(detail='SECRET_KEY')
 
+    if environment:
+        ENVIRONMENT: str = environment
+    else:
+        raise SettingException(detail='ENVIRONMENT')
+
+    if database_url:
+        DATABASE_URL: str = database_url
+    else:
+        raise SettingException(detail='DATABASE_URL')
+
+    if dev_database_url:
+        DEV_DATABASE_URL: str = dev_database_url
+    else:
+        raise SettingException(detail='DEV_DATABASE_URL')
+
+    # JWT
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 15 * 4  # 60 minutes
+    REFRESH_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 3  # 1 day
+    ALGORITHM: str = 'HS256'
+
+    # cors
     CORS_ORIGINS: list[str] = [
         'http://localhost:3000',
         'http://localhost:3000/leciel/reservation',
@@ -27,18 +58,8 @@ class Settings(BaseSettings):
     CORS_ORIGINS_REGEX: str | None = None
     CORS_HEADERS: list[str]
 
-    # JWT
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = 15 * 4  # 60 minutes
-    REFRESH_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 3  # 1 day
-
-    secret_key: str | None = os.getenv('SECRET_KEY')
-
-    if secret_key:
-        SECRET_KEY: str = secret_key
-    else:
-        raise SettingException
-
-    ALGORITHM: str = 'HS256'
+    # exception
+    EXCEPTIONS: list[Tuple] = [(ClientException, client_exception_handler)]
 
 
 settings = Settings()

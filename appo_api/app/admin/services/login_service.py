@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 
 from appo_api.config import settings
 from appo_api.core.security import create_jwt
-from appo_api.exceptions import UnAuthorizedException
+from appo_api.exceptions import DuplicatedManager, UnAuthorizedException
 
 from ...common.constants import TokenType
 from ..cruds import login_crud as crud
@@ -97,6 +97,14 @@ def verify_token(
 
 
 def register(request: schema.CreateManagerRequest, db: Session) -> schema.TokenResponse:
+    if crud.get_manager_by_number(request, db):
+        raise DuplicatedManager(
+            detail={'title': 'phone_number', 'data': request.phone_number}
+        )
+
+    if crud.get_manager_by_username(request, db):
+        raise DuplicatedManager(detail={'title': 'username', 'data': request.username})
+
     manager = crud.register(request, db)
 
     access_token = create_jwt(

@@ -1,3 +1,6 @@
+from fastapi.responses import JSONResponse
+
+
 class AppoException(Exception):
     """Base exception for the Appo API."""
 
@@ -7,6 +10,9 @@ class SettingException(AppoException):
 
     status_code: int = 500
     message: str = 'Server Setting Error'
+
+    def __init__(self, *, detail: dict | str | None = None):
+        self.detail = detail
 
 
 class DetailedHTTPException(AppoException):
@@ -65,3 +71,27 @@ class NotFoundException(ClientException):
 
 class UserNotFound(NotFoundException):
     message = '유저 정보를 찾을 수 없습니다.'
+
+
+class DuplicatedNumber(ClientException):
+    message: str = '해당 아파트에 중복된 번호로 이미 신청하셨습니다.'
+    headers: None = None
+
+    def __init__(self, *, detail: dict | str | None = None):
+        self.detail = detail
+
+
+class DuplicatedManager(ClientException):
+    message: str = '중복된 정보의 매니저가 이미 존재합니다.'
+    headers: None = None
+
+    def __init__(self, *, detail: dict | str | None = None):
+        self.detail = detail
+
+
+async def client_exception_handler(request, exc):
+    return JSONResponse(
+        status_code=exc.status_code,
+        content={'message': exc.message, 'detail': exc.detail},
+        headers=exc.headers,
+    )

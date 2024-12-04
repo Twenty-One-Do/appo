@@ -40,3 +40,16 @@ def create_counsel_application(
     db.commit()
 
     return new_counsel_applications
+
+
+def get_counsel_by_number(
+    request: schema.CreateCounselApplicationRequest, db: Session
+) -> list[CounselApplications] | None:
+    stmt = select(CounselApplications).where(
+        CounselApplications.is_active.is_(True),
+        CounselApplications.apartment_id == request.apartment_id,
+        CounselApplications.phone_number == request.phone_number,
+    )
+
+    result: list[CounselApplications] | None = db.scalars(stmt).all()
+    return result

@@ -78,10 +78,10 @@ class Managers(Base, Basic):
     __tablename__ = 'managers'
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
-    name: Mapped[str] = mapped_column(String(40), nullable=False, unique=True)
+    name: Mapped[str] = mapped_column(String(40), nullable=False)
     phone_number: Mapped[str] = mapped_column(String(13), nullable=False, unique=True)
     username: Mapped[str] = mapped_column(String(40), nullable=False, unique=True)
-    password: Mapped[str] = mapped_column(String(40), nullable=False)
+    password: Mapped[str] = mapped_column(String(128), nullable=False)
 
     def set_password(self, password: str) -> None:
         self.password = get_password_hash(password)

@@ -23,4 +23,8 @@ def create_app() -> FastAPI:
         allow_headers=settings.CORS_HEADERS,
     )
 
+    # Register exception handlers
+    for exception in settings.EXCEPTIONS:
+        app.add_exception_handler(*exception)
+
     return app

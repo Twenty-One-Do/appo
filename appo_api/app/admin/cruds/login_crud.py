@@ -1,3 +1,4 @@
+from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from appo_api.exceptions import UserNotFound
@@ -24,3 +25,27 @@ def register(request: schema.CreateManagerRequest, db: Session) -> Managers:
     db.commit()
 
     return new_manager
+
+
+def get_manager_by_number(
+    request: schema.CreateManagerRequest, db: Session
+) -> list[Managers] | None:
+    stmt = select(Managers).where(
+        Managers.is_active.is_(True),
+        Managers.phone_number == request.phone_number,
+    )
+
+    result: list[Managers] | None = db.scalars(stmt).all()
+    return result
+
+
+def get_manager_by_username(
+    request: schema.CreateManagerRequest, db: Session
+) -> list[Managers] | None:
+    stmt = select(Managers).where(
+        Managers.is_active.is_(True),
+        Managers.username == request.username,
+    )
+
+    result: list[Managers] | None = db.scalars(stmt).all()
+    return result

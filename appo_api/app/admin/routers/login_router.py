@@ -9,7 +9,7 @@ from appo_api.core.database import get_db
 from ..schemas import login_schemas as schema
 from ..services import login_service
 
-router = APIRouter(prefix='/admin', tags=['crm'])
+router = APIRouter(prefix='/admin', tags=['admin'])
 
 
 @router.post(
@@ -34,7 +34,7 @@ def refresh(refresh_token: Annotated[str, Form()], db: Session = Depends(get_db)
 
 @router.post(
     '/register',
-    summary='토큰 갱신',
+    summary='매니저 등록',
     description='매니저 등록',
     response_model=schema.TokenResponse,
 )
